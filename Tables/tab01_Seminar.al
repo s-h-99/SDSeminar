@@ -126,11 +126,11 @@ table 50101 "CSD Seminar"
 
     trigger OnDelete()
     begin
-        //CommentLine.Reset;
-        //CommentLine.SetRange("Table Name",
-        //CommentLine."Table Name"::Seminar);
-        //CommentLine.SetRange("No.", "No.");
-        //ComentLine.DeleteALL;
+        // CommentLine.Reset;
+        // CommentLine.SetRange("Table Name",
+        // CommentLine."Table Name"::Seminar);
+        // CommentLine.SetRange("No.", "No.");
+        // ComentLine.DeleteALL;
 
     end;
 
