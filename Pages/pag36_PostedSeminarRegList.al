@@ -1,17 +1,14 @@
-page 50113 "CSD Seminar Registration List"
+page 50136 "CSD Posted Seminar Reg. List"
 {
     // CSD1.00 - 2018-01-01 - D. E. Veloper
-    //   Chapter 6 - Lab 3
+    //   Chapter 7 - Lab 3
     //     - Created new page
-    // Chapter 7- Lab 4-8 
-    // Added Action Post
 
     Caption = 'Seminar Registration List';
-    CardPageID = "CSD Seminar Registration";
+    CardPageID = "CSD Posted Seminar Reg.";
     Editable = false;
     PageType = List;
-    SourceTable = "CSD Seminar Reg. Header";
-    UsageCategory = lists;
+    SourceTable = "CSD Posted Seminar Reg. Header";
 
     layout
     {
@@ -47,10 +44,14 @@ page 50113 "CSD Seminar Registration List"
         }
         area(factboxes)
         {
-            systempart("Links"; Links)
+            part("Seminar Details"; 50117)
+            {
+                SubPageLink = "No." = Field("Seminar No.");
+            }
+            systempart(Links; Links)
             {
             }
-            systempart("Notes"; Notes)
+            systempart(Notes; Notes)
             {
             }
         }
@@ -69,24 +70,14 @@ page 50113 "CSD Seminar Registration List"
                     Image = Comment;
                     RunObject = Page 50106;
                     RunPageLink = "No." = Field("No.");
-                    RunPageView = where("Table Name" = Const("Seminar Registration Header"));
+                    RunPageView = where("Table Name" = const("Posted Seminar Reg. Header"));
                 }
                 action("&Charges")
                 {
                     Caption = '&Charges';
                     Image = Costs;
-                    RunObject = Page 50124;
+                    RunObject = Page 50139;
                     RunPageLink = "Document No." = Field("No.");
-                }
-                action("&Post")
-                {
-                    Caption = '&Post';
-                    Image = PostDocument;
-                    Promoted = true;
-                    PromotedIsBig = true;
-                    PromotedCategory = Process;
-                    ShortcutKey = F9;
-                    RunObject = codeunit "CSD Seminar-Post (Yes/No)";
                 }
             }
         }
