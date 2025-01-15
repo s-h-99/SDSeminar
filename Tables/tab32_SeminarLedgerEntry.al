@@ -4,7 +4,11 @@ table 50132 "CSD Seminar Ledger Entry"
     //   Chapter 7 - Lab 1
     //     - Created new table
 
+    // Chapter 8 - Lab 2 - 3
+    // Added LookupPgaeId & DrilldownPageId properties
     Caption = 'Seminar Ledger Entry';
+    LookupPageId = "CSD Seminar Ledger Entries";
+    DrillDownPageId = "CSD Seminar Ledger Entries";
 
     fields
     {
@@ -158,6 +162,12 @@ table 50132 "CSD Seminar Ledger Entry"
     keys
     {
         key(Key1; "Entry No.")
+        {
+        }
+
+        // Chapter 8 - Lab 2-1
+        // Added key2
+        key(key2; "Document No.", "Posting Date")
         {
         }
     }

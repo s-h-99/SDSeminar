@@ -10,4 +10,75 @@ codeunit 50139 "CSD EventSubsriptions"
         ResLedgerEntry."CSD Seminar No." := ResJournalLine."CSD Seminar No.";
         ResLedgerEntry."CSD Registartion No." := ResJournalLine."CSD Seminar Registration No.";
     end;
+
+    [EventSubscriber(ObjectType::Page, 344, 'OnAfterNavigateFindRecords', '', true, true)]
+    local procedure ExtendNavigateOnAfterNavigateFindRecords
+    (var DocumentEntry: Record "Document Entry";
+    DocNoFilter: Text;
+    PostingDateFilter: Text);
+
+    var
+        SeminarLedgerEntry: Record "CSD Seminar Ledger Entry";
+        PostedSeminarRegHeader: Record "CSD Posted Seminar Reg. Header";
+        DocNoOfRecordes: Integer;
+        NextEntryNo: Integer;
+
+    begin
+        if PostedSeminarRegHeader.ReadPermission then begin
+            PostedSeminarRegHeader.Reset;
+            PostedSeminarRegHeader.SetFilter("No.", DocNoFilter);
+            PostedSeminarRegHeader.SetFilter("Posting Date", PostingDateFilter);
+            DocNoOfRecordes := PostedSeminarRegHeader.Count;
+            with DocumentEntry do begin
+                if DocNoOfRecordes = 0 then
+                    exit;
+                if FindLast() then
+                    NextEntryNo := "Entry No." + 1
+                else
+                    NextEntryNo := 1;
+                Init;
+                "Entry No." := NextEntryNo;
+                "Table ID" := Database::"CSD Posted Seminar Reg. Header";
+                "Document Type" :=
+                0;
+                "Table Name" := CopyStr(PostedSeminarRegHeader.TableCaption, 1, MaxStrLen("Table Name"));
+                "No. of Records" := DocNoOfRecordes;
+                Insert;
+            end;
+        end;
+
+    end;
+
+    [EventSubscriber(ObjectType::Page, 344, 'OnAfterNavigateShowRecords', '', true, true)]
+    local procedure ExtendNavigateOnAfterNavigateShowRecords
+      (TableID: Integer;
+        DocNoFilter: Text;
+        PostingDateFilter: Text;
+        ItemTrackingSearch: Boolean);
+
+    var
+        SeminarLedgerEntry: Record "CSD Seminar Ledger Entry";
+        PostedSeminarRegHeader: Record "CSD Posted Seminar Reg. Header";
+
+    begin
+        case TableID of
+            Database::"CSD Posted Seminar Reg. Header":
+                begin
+                    PostedSeminarRegHeader.SetFilter("No.", DocNoFilter);
+                    PostedSeminarRegHeader.SetFilter("Posting Date",
+                    PostingDateFilter);
+                    Page.Run(0, PostedSeminarRegHeader);
+                end;
+            Database::"CSD Seminar Ledger Entry":
+                begin
+                    SeminarLedgerEntry.SetFilter("Document No.",
+                    DocNoFilter);
+                    SeminarLedgerEntry.SetFilter("Posting Date",
+                    PostingDateFilter);
+                    Page.Run(0, SeminarLedgerEntry);
+                end;
+        end;
+    end;
+
+
 }

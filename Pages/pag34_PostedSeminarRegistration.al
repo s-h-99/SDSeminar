@@ -138,7 +138,24 @@ page 50134 "CSD Posted Seminar Reg."
                     RunObject = Page 50139;
                     RunPageLink = "Document No." = field("No.");
                 }
+                // Chapter 8-Lab 2- 4 
+                // Added Action Navigate
+                action("&Navigate")
+                {
+                    Caption = '&Navigate';
+                    Image = Navigate;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    trigger OnAction();
+                    var
+                        Navigate: page Navigate;
+                    begin
+                        Navigate.SetDoc(Rec."Posting Date", Rec."No.");
+                        Navigate.Run;
+                    end;
+                }
             }
+
         }
     }
 }

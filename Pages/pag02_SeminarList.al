@@ -53,8 +53,41 @@ page 50102 "CSD Seminar List"
                                  "No." = field("No.");
                     Image = Comment;
                 }
+                // >> Lab 8 1-3
+                action("Ledger Entries")
+                {
+                    RunObject = page "CSD Seminar Ledger Entries";
+                    RunPageLink = "Seminar No." = field("No.");
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    ShortcutKey = "Ctrl + F7";
+                    Image = WarrantyLedger;
+                }
+                action("&Registrations")
+                {
+                    RunObject = page "CSD Posted Seminar Reg. List";
+                    RunPageLink = "Seminar No." = field("No.");
+                    Image = Timesheet;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                }
+                // << Lab 8 1-3
             }
         }
+        // >> Lab 8 1-3
+        area(Processing)
+        {
+            action("Seminar Registration")
+            {
+                RunObject = page "CSD Seminar Registration";
+                RunPageLink = "Seminar No." = field("No.");
+                RunPageMode = Create;
+                Image = NewTimesheet;
+                Promoted = true;
+                PromotedCategory = New;
+            }
+        }
+        // << Lab 8 1-3
 
     }
 }
